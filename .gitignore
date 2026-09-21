@@ -1,7 +1,10 @@
-# Environments
+# Environment
 .venv/
 env/
 venv/
+.env
+.env.*
+!.env.example
 
 # Node
 node_modules/
@@ -11,7 +14,7 @@ dist/
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
+*.py.class
 *.so
 .pytest_cache/
 .mypy_cache/
@@ -20,3 +23,40 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+cache/
+
+# Data
+data/
+
+# ML model weights
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
+# Python build
+build/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
