@@ -1,0 +1,24 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libgdal-dev \
+    libgeos-dev \
+    libproj-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY pyproject.toml README.md ./
+RUN pip install --no-cache-dir uv && uv pip install --system -e .
+
+COPY src/ ./src/
+COPY configs/ ./configs/
+COPY apps/ ./apps/
+COPY scripts/ ./scripts/
+COPY data/ ./data/
+
+ENV PYTHONPATH="/app/src:/app"
+ENV TERRASEEK_ENV="production"
+
+CMD ["python", "-m", "terraseek.workers.runner"]

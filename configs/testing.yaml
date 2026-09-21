@@ -1,0 +1,39 @@
+env: testing
+api:
+  host: "127.0.0.1"
+  port: 8001
+  title: "TerraSeek API (Test)"
+  version: "0.1.0"
+  cors_origins:
+    - "*"
+
+database:
+  url: "sqlite:///:memory:"
+  sqlite_fallback_url: "sqlite:///:memory:"
+  echo: false
+  pool_size: 5
+  max_overflow: 10
+
+vector_db:
+  url: ":memory:"
+  api_key: ""
+  collection_name: "test_observations"
+  embedding_dimension: 512
+  prefer_in_memory: true
+
+storage:
+  root: "./data/test_storage"
+  provider: "filesystem"
+
+models:
+  embedding_provider: "demo"
+  change_provider: "demo"
+  cache_dir: "./data/test_models"
+
+workers:
+  poll_interval_seconds: 1
+  max_concurrent_jobs: 2
+
+logging:
+  level: "WARNING"
+  format: "json"

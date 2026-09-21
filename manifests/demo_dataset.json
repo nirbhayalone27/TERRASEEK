@@ -1,0 +1,60 @@
+{
+  "dataset_name": "TerraSeek-Demo-Benchmark-v1",
+  "version": "1.0.0",
+  "crs": "EPSG:4326",
+  "sites_count": 5,
+  "sites": [
+    {
+      "site_id": "site-01",
+      "name": "Site 01 - Riverside Development",
+      "location": "Danube Valley, Sector 4",
+      "coordinates": [16.3738, 48.2082],
+      "primary_change": "BUILDING",
+      "dates": ["2024-03-15", "2025-01-20"],
+      "spatial_features": [
+        {
+          "name": "Danube River Channel",
+          "type": "river",
+          "measured_distance_m": 320.0
+        }
+      ],
+      "ground_truth_status": "SUPPORTED"
+    },
+    {
+      "site_id": "site-02",
+      "name": "Site 02 - Industrial Logistics Expansion",
+      "location": "Rhine Logistics Corridor",
+      "coordinates": [6.9603, 50.9375],
+      "primary_change": "BUILDING",
+      "dates": ["2024-04-10", "2025-02-12"],
+      "ground_truth_status": "NEEDS_REVIEW"
+    },
+    {
+      "site_id": "site-03",
+      "name": "Site 03 - Highway Bypass Construction",
+      "location": "Bavaria North Link",
+      "coordinates": [11.0767, 49.4521],
+      "primary_change": "ROAD",
+      "dates": ["2024-05-02", "2024-12-15"],
+      "ground_truth_status": "SUPPORTED"
+    },
+    {
+      "site_id": "site-04",
+      "name": "Site 04 - Forest Canopy Loss",
+      "location": "Black Forest Basin",
+      "coordinates": [8.2014, 48.0501],
+      "primary_change": "VEGETATION",
+      "dates": ["2024-02-18", "2024-11-20"],
+      "ground_truth_status": "SUPPORTED"
+    },
+    {
+      "site_id": "site-05",
+      "name": "Site 05 - Reservoir Surface Extent Change",
+      "location": "Alps Catchment Reservoir",
+      "coordinates": [11.4041, 47.2692],
+      "primary_change": "WATER",
+      "dates": ["2024-06-14", "2025-01-08"],
+      "ground_truth_status": "SUPPORTED"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+env: development
+api:
+  host: "0.0.0.0"
+  port: 8000
+  title: "TerraSeek API"
+  version: "0.1.0"
+  cors_origins:
+    - "http://localhost:5173"
+    - "http://127.0.0.1:5173"
+    - "http://localhost:5174"
+    - "http://127.0.0.1:5174"
+    - "http://localhost:3000"
+
+database:
+  url: "postgresql://terraseek:terraseek@localhost:5432/terraseek"
+  sqlite_fallback_url: "sqlite:///./data/terraseek_dev.db"
+  echo: false
+  pool_size: 10
+  max_overflow: 20
+
+vector_db:
+  url: "http://localhost:6333"
+  api_key: ""
+  collection_name: "satellite_observations"
+  embedding_dimension: 512
+  prefer_in_memory: false
+
+storage:
+  root: "./data/storage"
+  provider: "filesystem"
+
+models:
+  embedding_provider: "demo" # "demo" | "georsclip"
+  change_provider: "demo"    # "demo" | "unet_resnet34"
+  cache_dir: "./data/models"
+
+workers:
+  poll_interval_seconds: 2
+  max_concurrent_jobs: 4
+
+logging:
+  level: "INFO"
+  format: "json"

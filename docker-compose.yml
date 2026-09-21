@@ -1,0 +1,88 @@
+services:
+  postgis:
+    image: postgis/postgis:16-3.4
+    container_name: terraseek_postgis
+    environment:
+      POSTGRES_DB: terraseek
+      POSTGRES_USER: terraseek
+      POSTGRES_PASSWORD: terraseek_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U terraseek -d terraseek"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  qdrant:
+    image: qdrant/qdrant:v1.8.0
+    container_name: terraseek_qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrantdata:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:6333/readyz || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.api
+    container_name: terraseek_api
+    environment:
+      TERRASEEK_ENV: production
+      DATABASE_URL: postgresql://terraseek:terraseek_dev_password@postgis:5432/terraseek
+      QDRANT_URL: http://qdrant:6333
+      STORAGE_ROOT: /data/storage
+      EMBEDDING_PROVIDER: demo
+      CHANGE_DETECTION_PROVIDER: demo
+    ports:
+      - "8000:8000"
+    volumes:
+      - appdata:/data
+    depends_on:
+      postgis:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.worker
+    container_name: terraseek_worker
+    environment:
+      TERRASEEK_ENV: production
+      DATABASE_URL: postgresql://terraseek:terraseek_dev_password@postgis:5432/terraseek
+      QDRANT_URL: http://qdrant:6333
+      STORAGE_ROOT: /data/storage
+      EMBEDDING_PROVIDER: demo
+      CHANGE_DETECTION_PROVIDER: demo
+    volumes:
+      - appdata:/data
+    depends_on:
+      postgis:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.web
+    container_name: terraseek_web
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
+  qdrantdata:
+  appdata:
